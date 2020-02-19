@@ -5,10 +5,13 @@
 # THEN FROM FILE=> NEWFILE=RSCRIPT=> WRITE SOME TIHING AND SAVE IT AS r file
 # then how do we upload this created file to github?
 # tools=>versioncontrol=>commit=> and select the files you want to commit=> and take to
+
 # the github repository => then write some messeges if ypu want and hit commit
 #a new messege will apear says 2 files changed...etc and close it
 # then hit push  after some procesecess it will end and you close it
 # finaly when you go to your github account 
+
+# the github repository
 
 
 
@@ -17,3 +20,5 @@ head(mtcars)
 summary(mtcars)
 str(mtcars)
 plot(mtcars$hp, mtcars$cyl)
+hist(mtcars$hp)
+boxplot(mtcars$mpg)
