@@ -75,6 +75,71 @@ flightskmr<-data.frame(flights,kmhr)
 head(flightskmr)
 fastest<-arrange(flightskmr,desc(kmhr))
 
+# select columns with select()
+# select columns by name eg
+select(flights,year,month,day)
+
+# select all column names between year and dep_delay
+select(flights,year : dep_delay)
+
+# select all colomns except the col in negative brackets
+select(flights,-(year : day))
+
+#select columns with the help of helper functions eg
+
+select(flights,contains('dep'))
+
+# selects from year to day and all the colomns with 'dep' , select var that starts with 'dep'
+select(flights,year : day, contains('tim'))
+select(flights,year, starts_with('dep'))
+
+# to rename a column name(tailnum) by tail_num we use rename
+flights1<-rename(flights, tail_num = tailnum)
+
+# if you like to bring some variables in the first and then the rest
+select(flights, time_hour,air_time, everything())
+
+
+# adding new variable with mutate
+flights_sml <-select(flights, year:day,ends_with('delay'),distance,air_time)
+flights_sml<-mutate(flights_sml, gain= dep_delay - arr_delay, speed= distance/air_time*60)
+# if you like to retain only the new variables
+transmute(flights_sml,gain =dep_delay -arr_delay, hours= air_time/60, gain_phr= gain/hours)
+
+# grouped summaries with summarise() => this colapses a df in to a single row. it helps most when 
+# it is used with a group_by()
+
+by_day<- group_by(flights,year,month,day)
+summarise(by_day,delay=mean(dep_delay,na.rm = TRUE))
+
+# combining multiple operations with pipe
+
+# 3-steps for this graph
+#1. group flight by destination ,# 2 summarise to compute distance,average delay and number of flights
+#3 filter to remove noisy points and hanolulu, which is twice as the distance as the next closest airport
+by_dest<-group_by(flights,dest)
+delay<-summarise(by_dest,
+count= n(),
+dist=mean(distance,na.rm = TRUE),
+delay=mean(arr_delay,na.rm = TRUE)
+)
+delay<-filter(delay,count>20, dest !='HNL')
+
+# using pip
+delays<- flights%>%
+  group_by(dest) %>%
+  summarise(
+    count=n(),
+    dist=mean(dist,na.rm = TRUE),
+    delay=mean(arr_delay,na.rm = TRUE)
+  )%>%
+  filter(count>20, dest!='HNL')
+    
+
+
+ggplot(data = delay, mapping = aes(x=dist, y= delay))+ geom_point(aes(size= count),alpha =1/3) +geom_smooth(se=FALSE)
+
+
 library(datasets)
 head(mtcars)
 summary(mtcars)
