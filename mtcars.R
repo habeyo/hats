@@ -8,7 +8,7 @@
 # the github repository => then write some messeges if ypu want and hit commit
 #a new messege will apear says 2 files changed...etc and close it
 # then hit push  after some procesecess it will end and you close it
-# finaly when you go to your github account 
+# finaly when you go to your github account and refresh it the changes you made from R-STUIDO WILL APPEAR IN THE GIT HUB REPOSITORY 
 
 # the github repository
 
